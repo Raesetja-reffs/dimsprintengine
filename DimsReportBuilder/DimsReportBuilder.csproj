@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Reference Include="DevExpress.AspNetCore.Reporting">
-      <HintPath>lib\devexpress.aspnetcore.reporting\24.1.3\lib\DevExpress.AspNetCore.Reporting.dll</HintPath>
+      <HintPath>lib\devexpress.aspnetcore.reporting\24.1.3\lib\net6.0\DevExpress.AspNetCore.Reporting.v24.1.dll</HintPath>
     </Reference>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="24.1.3" />
