@@ -1039,6 +1039,7 @@
             this.xrLabel12.StylePriority.UseTextAlignment = false;
             this.xrLabel12.Text = "\r\n\r\n\r\nContinue to next page...";
             this.xrLabel12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
+            this.xrLabel12.PrintOnPage += new DevExpress.XtraReports.UI.PrintOnPageEventHandler(this.xrLabel12_PrintOnPage);
             // 
             // xrTable4
             // 
@@ -1050,7 +1051,8 @@
             this.xrTableRow17,
             this.xrTableRow18});
             this.xrTable4.SizeF = new System.Drawing.SizeF(161.7713F, 75F);
-            this.xrTable4.Visible = false;
+            //this.xrTable4.Visible = false;
+            this.xrTable4.PrintOnPage += new DevExpress.XtraReports.UI.PrintOnPageEventHandler(this.xrTable4_PrintOnPage);
             // 
             // xrTableRow16
             // 

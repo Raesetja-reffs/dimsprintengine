@@ -44,8 +44,11 @@ namespace Invoice.Controllers
 
             if (apiUrl != null && queryParameters["is_without_price"] == null)
             {
-                XtraReport rep = CreateReport();
+                var rep = new OrderInvoice();
+                rep.RequestParameters = false;
                 rep.DataSource = CreateObjectDataSource(apiUrl);
+                rep.CreateDocument();
+                rep.CustomPageCount = rep.PrintingSystem.PageCount;
                 return View(rep);
             }
             XtraReport report = new ErrorReport();
