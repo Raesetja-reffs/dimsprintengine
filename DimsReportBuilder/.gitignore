@@ -1,0 +1,61 @@
+# Visual Studio files
+.vscode/
+*.sln.docstates
+*.suo
+*.user
+*.userosscache
+*.sln.ide
+
+# Rider files
+.idea/
+*.sln.iml
+*.sln.ide
+
+# NuGet
+*.lock
+project.lock.json
+packages/
+*.sqlite
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio Code folders
+.vscode/
+
+# Rider folders
+.idea/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Miscellaneous
+*.DS_Store
+Thumbs.db
+UserInterfaceDesign.xml
+AppxManifest.xml
+bin/
+
+# ASP.NET Scaffolding
+Generated_Code/
+
+# Node.js
+node_modules/
+
+# Visual Studio 2019 specific
+.vs/
