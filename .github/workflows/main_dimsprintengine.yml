@@ -50,10 +50,14 @@ jobs:
       #     name: .net-app
 
       - name: List artifact contents
-        run: ls -R ${{ github.workspace }}
+      shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+      run: |
+        ls -R ${{ github.workspace }}  # Verify contents of publish folder
 
       - name: List artifact contents
-        run: ls -R ${{ github.workspace }}/publish
+      shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+      run: |
+        ls -R ${{ github.workspace }}/publish  # Verify contents of publish folder
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
