@@ -29,11 +29,11 @@ jobs:
       # - name: dotnet publish
       #   run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-      # - name: Upload artifact for deployment job
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: .net-app
-      #     path: ${{env.DOTNET_ROOT}}/myapp
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: .net-app
+          path: ${{ github.workspace }}/publish
 
   deploy:
     runs-on: windows-latest
@@ -43,21 +43,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
-      # No need to download because we are using the github
-      # - name: Download artifact from build job
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: .net-app
-
-      - name: List artifact contents
-        shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
-        run: |
-          ls -R ${{ github.workspace }}  # Verify contents of publish folder
-
-      - name: List artifact contents
-        shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
-        run: |
-          ls -R ${{ github.workspace }}/publish  # Verify contents of publish folder
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -65,5 +54,5 @@ jobs:
         with:
           app-name: 'dimsprintengine'
           slot-name: 'Production'
-          package: ${{ github.workspace }}/publish
+          package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AE6D1D4398554FC6ABA80F298110B878 }}
