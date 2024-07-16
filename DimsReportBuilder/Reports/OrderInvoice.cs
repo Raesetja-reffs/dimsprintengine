@@ -10,7 +10,7 @@ namespace DimsReportBuilder.Reports
 {
     public partial class OrderInvoice : DevExpress.XtraReports.UI.XtraReport
     {
-        public int CustomPageCount = -1;
+        //public int CustomPageCount = -1;
         public OrderInvoice()
         {
             InitializeComponent();
@@ -27,32 +27,32 @@ namespace DimsReportBuilder.Reports
 
         private void xrLabel12_PrintOnPage(object sender, PrintOnPageEventArgs e)
         {
-            if (CustomPageCount != -1)
-            {
-                if (CustomPageCount == 1 || (CustomPageCount == (e.PageIndex + 1)))
-                {
-                    xrLabel12.Visible = false;
-                }
-                else
-                {
-                    xrLabel12.Visible = true;
-                }
-            }
+            //if (CustomPageCount != -1)
+            //{
+            //    if (CustomPageCount == 1 || (CustomPageCount == (e.PageIndex + 1)))
+            //    {
+            //        xrLabel12.Visible = false;
+            //    }
+            //    else
+            //    {
+            //        xrLabel12.Visible = true;
+            //    }
+            //}
         }
 
         private void xrTable4_PrintOnPage(object sender, PrintOnPageEventArgs e)
         {
-            if (CustomPageCount != -1)
-            {
-                if (CustomPageCount == (e.PageIndex + 1))
-                {
-                    xrTable4.Visible = true;
-                }
-                else
-                {
-                    xrTable4.Visible = false;
-                }
-            }
+            //if (CustomPageCount != -1)
+            //{
+            //    if (CustomPageCount == (e.PageIndex + 1))
+            //    {
+            //        xrTable4.Visible = true;
+            //    }
+            //    else
+            //    {
+            //        xrTable4.Visible = false;
+            //    }
+            //}
         }
     }
 }

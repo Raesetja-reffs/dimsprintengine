@@ -47,8 +47,8 @@ namespace Invoice.Controllers
                 var rep = new OrderInvoice();
                 rep.RequestParameters = false;
                 rep.DataSource = CreateObjectDataSource(apiUrl);
-                rep.CreateDocument();
-                rep.CustomPageCount = rep.PrintingSystem.PageCount;
+                //rep.CreateDocument();
+                //rep.CustomPageCount = rep.PrintingSystem.PageCount;
                 return View(rep);
             }
             XtraReport report = new ErrorReport();
