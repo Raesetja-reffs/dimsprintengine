@@ -13,6 +13,8 @@ builder.Services.ConfigureReportingServices(configurator => {
         viewerConfigurator.UseCachedReportSourceBuilder();
     });
 });
+// Register IHttpClientFactory
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

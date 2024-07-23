@@ -15,13 +15,15 @@ namespace Invoice.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
+            _httpClientFactory = httpClientFactory;
         }
 
-        public IActionResult Index(string apiUrl)
+        public async Task<IActionResult> Index(string apiUrl, string reportUrl)
         {
             if(apiUrl == null)
             {
@@ -29,27 +31,35 @@ namespace Invoice.Controllers
                 return View(errorReport);
             }
 
-            Uri uri = new Uri(apiUrl);
-            NameValueCollection queryParameters = HttpUtility.ParseQueryString(uri.Query);
-
-            if (queryParameters["is_without_price"] != null)
+            if (apiUrl != null)
             {
-                string updatedUrl = RemoveParametersFromUrl(apiUrl, "is_without_price");
+                try
+                {
+                    // Fetch report file from API URL
+                    var httpClient = _httpClientFactory.CreateClient();
+                    var response = await httpClient.GetAsync(reportUrl);
 
-                XtraReport rep = new DeliveryReport();
-                rep.RequestParameters = false;
-                rep.DataSource = CreateObjectDataSource(updatedUrl);
-                return View(rep);
-            }
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound("Report not found or API error");
+                    }
 
-            if (apiUrl != null && queryParameters["is_without_price"] == null)
-            {
-                var rep = new OrderInvoice();
-                rep.RequestParameters = false;
-                rep.DataSource = CreateObjectDataSource(apiUrl);
-                //rep.CreateDocument();
-                //rep.CustomPageCount = rep.PrintingSystem.PageCount;
-                return View(rep);
+                    // Load the report from stream
+                    using (var stream = await response.Content.ReadAsStreamAsync())
+                    {
+                        XtraReport rep = XtraReport.FromStream(stream);
+                        rep.RequestParameters = false;
+                        rep.DataSource = CreateObjectDataSource(apiUrl);
+                        //rep.CreateDocument();
+                        //rep.CustomPageCount = rep.PrintingSystem.PageCount;
+                        return View(rep);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex);
+                    return BadRequest($"Error loading report: {ex.Message}");
+                }
             }
             XtraReport report = new ErrorReport();
             return View(report);
