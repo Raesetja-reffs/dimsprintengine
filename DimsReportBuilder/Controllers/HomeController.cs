@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Web;
 using DevExpress.DataAccess.Json;
 using System.Collections.Specialized;
+using System.IO;
 
 namespace Invoice.Controllers
 {
@@ -25,7 +26,7 @@ namespace Invoice.Controllers
 
         public async Task<IActionResult> Index(string apiUrl, string reportUrl)
         {
-            if(apiUrl == null || reportUrl == null)
+            if(apiUrl == null)
             {
                 XtraReport errorReport = new ErrorReport();
                 return View(errorReport);
@@ -35,24 +36,36 @@ namespace Invoice.Controllers
             {
                 try
                 {
-                    // Fetch report file from API URL
-                    var httpClient = _httpClientFactory.CreateClient();
-                    var response = await httpClient.GetAsync(reportUrl);
-
-                    if (!response.IsSuccessStatusCode)
+                    if (reportUrl == null)
                     {
-                        return NotFound("Report not found or API error");
-                    }
-
-                    // Load the report from stream
-                    using (var stream = await response.Content.ReadAsStreamAsync())
-                    {
-                        XtraReport rep = XtraReport.FromStream(stream);
+                        XtraReport rep = new OrderInvoice();
                         rep.RequestParameters = false;
                         rep.DataSource = CreateObjectDataSource(apiUrl);
                         //rep.CreateDocument();
                         //rep.CustomPageCount = rep.PrintingSystem.PageCount;
                         return View(rep);
+                    }
+                    else
+                    {
+                        // Fetch report file from API URL
+                        var httpClient = _httpClientFactory.CreateClient();
+                        var response = await httpClient.GetAsync(reportUrl);
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            return NotFound("Report not found or API error");
+                        }
+
+                        // Load the report from stream
+                        using (var stream = await response.Content.ReadAsStreamAsync())
+                        {
+                            XtraReport rep = XtraReport.FromStream(stream);
+                            rep.RequestParameters = false;
+                            rep.DataSource = CreateObjectDataSource(apiUrl);
+                            //rep.CreateDocument();
+                            //rep.CustomPageCount = rep.PrintingSystem.PageCount;
+                            return View(rep);
+                        }
                     }
                 }
                 catch (Exception ex)
