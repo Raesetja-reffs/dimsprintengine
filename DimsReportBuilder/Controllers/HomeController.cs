@@ -25,7 +25,7 @@ namespace Invoice.Controllers
 
         public async Task<IActionResult> Index(string apiUrl, string reportUrl)
         {
-            if(apiUrl == null)
+            if(apiUrl == null || reportUrl == null)
             {
                 XtraReport errorReport = new ErrorReport();
                 return View(errorReport);
