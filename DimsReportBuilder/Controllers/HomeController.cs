@@ -105,7 +105,7 @@ namespace Invoice.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     string? jsonFromApi = response.Content;
-                    var data = JsonConvert.DeserializeObject<Rootobject>(jsonFromApi);
+                    var data = JsonConvert.DeserializeObject(jsonFromApi);
                     jsonString = JsonConvert.SerializeObject(data);
                 }
                 CustomJsonSource customJsonSource = new CustomJsonSource();
